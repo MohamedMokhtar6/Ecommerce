@@ -19,13 +19,23 @@ namespace Ecommerce.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var genres = await _context.categories.OrderBy(g => g.Name).ToListAsync();
-            return Ok(genres);
+            var categories = await _context.categories.OrderBy(g => g.Name).ToListAsync();
+            return Ok(categories);
+        }
+        [HttpGet("id")]
+        public async Task<IActionResult> GetAllByIdAsync(int id)
+        {
+            var category = await _context.categories.SingleOrDefaultAsync(c => c.Id == id);
+            return Ok(category);
         }
         [HttpPost]
         public async Task<IActionResult> CreateGenraAsync(CategoryDto dto)
         {
-            var category = new Category { Name = dto.Name };
+            var category = new Category 
+            {
+                Name = dto.Name,
+                UpdateDate = DateTime.Now
+        };
             await _context.categories.AddAsync(category);
             _context.SaveChanges();
             return Ok(category);
@@ -37,9 +47,10 @@ namespace Ecommerce.Controllers
             var category=await _context.categories.SingleOrDefaultAsync(g=>g.Id==id);
             if (category == null)
             {
-                return NotFound($"no genra was found with id ={id}");
+                return NotFound($"no Category was found with id ={id}");
             }
             category.Name = dto.Name;
+            category.UpdateDate = DateTime.Now;
             _context.SaveChanges();
             return Ok(category);
         }
@@ -49,7 +60,7 @@ namespace Ecommerce.Controllers
             var category=await _context.categories.SingleOrDefaultAsync(gen=>gen.Id==id);
             if(category == null)
             {
-                return NotFound($"No genra was found with id:{id}");
+                return NotFound($"No Category was found with id:{id}");
             }
             _context.categories.Remove(category);
             _context.SaveChanges();

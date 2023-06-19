@@ -22,21 +22,27 @@ namespace Ecommerce.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var product = await _context.products.Include(p=>p.Category).ToListAsync();
+            var product = await _context.products.OrderBy(p=>p.UpdateDate).Include(p=>p.Category).Include(p=>p.Brand).ToListAsync();
             return Ok(product);
         }
         [HttpGet("id")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var product = await _context.products.Include(p => p.Category).SingleOrDefaultAsync(p=>p.Id==id);
+            var product = await _context.products.Include(p => p.Category).Include(p => p.Brand).SingleOrDefaultAsync(p=>p.Id==id);
             if (product == null)
                 return NotFound();
             return Ok(product);
         }
-        [HttpGet("GetByGenraId")]
-        public async Task<IActionResult> GetByGenraId(int CategoryId)
+        [HttpGet("GetByCategoryId")]
+        public async Task<IActionResult> GetByCategoryId(int CategoryId)
         {
-            var product = await _context.products.Where(p=>p.CategoryId==CategoryId).Include(p => p.Category).ToListAsync();
+            var product = await _context.products.Where(p=>p.CategoryId==CategoryId).Include(p => p.Category).Include(p => p.Brand).ToListAsync();
+            return Ok(product);
+        }
+        [HttpGet("GetByBrandId")]
+        public async Task<IActionResult> GetByBrandId(int BrandId)
+        {
+            var product = await _context.products.Where(p => p.BrandId == BrandId).Include(p => p.Category).Include(p => p.Brand).ToListAsync();
             return Ok(product);
         }
         [HttpPost]
@@ -66,7 +72,9 @@ namespace Ecommerce.Controllers
                 Name = dto.Name,
                 CategoryId = dto.CategoryId,
                 Poster = dataStream.ToArray(),
-            };
+                UpdateDate = DateTime.Now,
+                BrandId = dto.BrandId,
+        };
             await _context.AddAsync(product);
             _context.SaveChanges();
             return Ok(product);
@@ -103,6 +111,8 @@ namespace Ecommerce.Controllers
             product.Rate = dto.Rate;
             product.Quntity = dto.Quntity;
             product.CategoryId = dto.CategoryId;
+            product.UpdateDate = DateTime.Now;
+            product.BrandId = dto.BrandId;
 
             _context.Update(product);
             _context.SaveChanges();

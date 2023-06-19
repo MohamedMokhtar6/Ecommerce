@@ -11,6 +11,7 @@ namespace Ecommerce.Dtos
         [MaxLength(2500)]
         public string Description { get; set; }
         public int CategoryId { get; set; }
+        public int BrandId { get; set; }
 
         public int Quntity { get; set; }
         public IFormFile? Poster { get; set; }
