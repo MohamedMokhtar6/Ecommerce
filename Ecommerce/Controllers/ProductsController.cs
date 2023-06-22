@@ -5,6 +5,7 @@ using Ecommerce.Data;
 using Ecommerce.Dtos;
 using Ecommerce.Migrations;
 using Ecommerce.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ecommerce.Controllers
 {
@@ -19,6 +20,7 @@ namespace Ecommerce.Controllers
         {
             _context = context;
         }
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -50,7 +52,7 @@ namespace Ecommerce.Controllers
         {
             if (dto.Poster == null)
             {
-                return BadRequest("poster is reqouird");
+                return BadRequest("poster is required");
             }
             if (!_allowesExtenstions.Contains(Path.GetExtension(dto.Poster.FileName).ToLower()))
                 return BadRequest("Only .png and .jpg images are allowed");
@@ -104,7 +106,7 @@ namespace Ecommerce.Controllers
 
             var isVaildCaategory = await _context.categories.AnyAsync(c => c.Id == dto.CategoryId);
             if (!isVaildCaategory)
-                return BadRequest("Wrong Caategory Id");
+                return BadRequest("Wrong Category Id");
             product.Price = dto.Price;
             product.Name = dto.Name;
             product.Description = dto.Description;
