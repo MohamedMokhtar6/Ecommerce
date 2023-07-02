@@ -13,12 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>options.UseSqlServer(connectionStr));
+builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(
-    o =>
+})
+    .AddJwtBearer(o =>
     {
         o.RequireHttpsMetadata = false;
         o.SaveToken = false;
@@ -40,9 +43,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
-builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
-builder.Services.AddScoped<IAuthService, AuthService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

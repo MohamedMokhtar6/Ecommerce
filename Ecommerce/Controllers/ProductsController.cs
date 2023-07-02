@@ -20,7 +20,7 @@ namespace Ecommerce.Controllers
         {
             _context = context;
         }
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
