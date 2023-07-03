@@ -9,5 +9,8 @@ namespace E_Commerce.Core.Models
         public string Name { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.Now;
         public DateTime UpdateDate { get; set; } 
+        public List<Brand> Brands { get; set; }
+        public List<Product> products { get; set; }
+
     }
 }

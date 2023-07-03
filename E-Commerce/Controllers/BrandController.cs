@@ -78,7 +78,7 @@ namespace E_Commerce.Controllers
             }
             if (dto.Poster == null)
             {
-                return BadRequest("poster is reqouird");
+                return BadRequest("poster is required");
             }
             var isVaildCaategory = await _categoryRepository.FindById(dto.CategoryId);
             if (isVaildCaategory== null)
