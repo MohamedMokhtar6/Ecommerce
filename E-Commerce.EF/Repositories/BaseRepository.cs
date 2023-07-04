@@ -31,7 +31,8 @@ namespace E_Commerce.EF.Repositories
             _context.Set<T>().Remove(item);
             _context.SaveChanges();
  
-        }    public async Task DeleteAll(IEnumerable<T> items)
+        }   
+        public async Task DeleteAll(IEnumerable<T> items)
         {
             _context.Set<T>().RemoveRange(items);
             _context.SaveChanges();
@@ -69,7 +70,8 @@ namespace E_Commerce.EF.Repositories
                     query = query.Include(include);
                 }
             return await query.Where(match).ToListAsync();
-        }  public async Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match)
+        } 
+        public async Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match)
         {
             IQueryable<T> query = _context.Set<T>();
           
@@ -84,6 +86,13 @@ namespace E_Commerce.EF.Repositories
                 {
                     query = query.Include(include);
                 }
+            if (orderBy != null)
+            {
+                if (orderByDirection == "Ascending")
+                    query = query.OrderBy(orderBy);
+                else
+                    query = query.OrderByDescending(orderBy);
+            };
             return await query.Where(match).ToListAsync();
         }
 
@@ -126,6 +135,11 @@ namespace E_Commerce.EF.Repositories
                     query=query.Include(include);
                 }
             return await query.ToListAsync();
+        }
+
+        public Task<IEnumerable<T>> Search(string name)
+        {
+            throw new NotImplementedException();
         }
     }
 }

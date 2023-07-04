@@ -137,6 +137,16 @@ namespace E_Commerce.Controllers
             _unitOfWork.Product.Update(product);
             return Ok(product);
         }
+        [HttpGet("search")]
+        public async Task<IActionResult> search(string productName)
+        {
+            if(productName == null) return BadRequest("no search query");
+            var products = await _unitOfWork.Product.FindAllByQuery(p=>p.Name.Contains(productName) || p.Description.Contains(productName)
+            , new[] { "Category", "Brand" } , p=>p.Name);
+            if (products.Count() == 0) return NotFound();
+            return Ok(products);
+        }
+
 
     }
 }
