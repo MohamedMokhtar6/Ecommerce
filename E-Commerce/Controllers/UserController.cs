@@ -1,7 +1,6 @@
 ﻿using E_Commerce.Core.Dtos;
 using E_Commerce.Core.Interfaces;
 using E_Commerce.Core.Models;
-using E_Commerce.EF.Migrations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

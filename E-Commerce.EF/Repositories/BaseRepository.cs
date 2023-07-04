@@ -36,7 +36,11 @@ namespace E_Commerce.EF.Repositories
         public async Task<T> FindById(int id)
         {
             return await _context.Set<T>().FindAsync(id);
-        } public async Task<T> FindById(string id)
+        }
+        public async Task<T> FindById(string id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }  public async Task<T> FindById(Guid id)
         {
             return await _context.Set<T>().FindAsync(id);
         }

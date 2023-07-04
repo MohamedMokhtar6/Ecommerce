@@ -9,10 +9,10 @@ namespace E_Commerce.Core.Models
 {
     public class CartItem
     {
-        public int Id { get; set; }
-        public Guid CartId { get; set; }
+        public int Id   { get; set; }
+        public Guid CartId  { get; set; }
         public int ProductId { get; set; }
-        public decimal UnitPrice { get; set; }
+        public double UnitPrice { get; set; }
         public int Quantity { get; set; }
         [JsonIgnore]
         public Cart Cart { get; set; }
