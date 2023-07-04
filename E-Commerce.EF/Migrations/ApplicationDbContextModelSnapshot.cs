@@ -141,8 +141,9 @@ namespace E_Commerce.EF.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -166,8 +167,8 @@ namespace E_Commerce.EF.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -219,8 +220,9 @@ namespace E_Commerce.EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -245,11 +247,11 @@ namespace E_Commerce.EF.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -515,11 +517,11 @@ namespace E_Commerce.EF.Migrations
             modelBuilder.Entity("E_Commerce.Core.Models.Product", b =>
                 {
                     b.HasOne("E_Commerce.Core.Models.Brand", "Brand")
-                        .WithMany("products")
+                        .WithMany()
                         .HasForeignKey("BrandId");
 
                     b.HasOne("E_Commerce.Core.Models.Category", "Category")
-                        .WithMany("products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -580,11 +582,6 @@ namespace E_Commerce.EF.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("E_Commerce.Core.Models.Brand", b =>
-                {
-                    b.Navigation("products");
-                });
-
             modelBuilder.Entity("E_Commerce.Core.Models.Cart", b =>
                 {
                     b.Navigation("Items");
@@ -593,8 +590,6 @@ namespace E_Commerce.EF.Migrations
             modelBuilder.Entity("E_Commerce.Core.Models.Category", b =>
                 {
                     b.Navigation("Brands");
-
-                    b.Navigation("products");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.Order", b =>

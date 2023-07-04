@@ -10,9 +10,9 @@ namespace E_Commerce.Core.Dtos
 {
     public class CartItemDto
     {
+
         public Guid CartId { get; set; }
         public int ProductId { get; set; }
-        public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
     
     }
