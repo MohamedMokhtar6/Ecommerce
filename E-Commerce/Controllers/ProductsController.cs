@@ -28,7 +28,7 @@ namespace E_Commerce.Controllers
         [HttpGet("id")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var product = await _unitOfWork.Product.FindAllByQuery(p=>p.Id==id , new[] { "Category", "Brand" });
+            var product = await _unitOfWork.Product.FindAllByQuery(p => p.Id == id, new[] { "Category", "Brand" });
             if (product.Count() == 0)
                 return NotFound();
             return Ok(product);
@@ -45,7 +45,7 @@ namespace E_Commerce.Controllers
         public async Task<IActionResult> GetByBrandId(int BrandId)
         {
             var product = await _unitOfWork.Product.FindAllByQuery(p => p.BrandId == BrandId, new[] { "Category", "Brand" });
-            if (product.Count()==0)
+            if (product.Count() == 0)
                 return NotFound();
             return Ok(product);
         }
@@ -63,7 +63,7 @@ namespace E_Commerce.Controllers
                 return BadRequest("Max Allowed images size 2mb");
 
             var isVaildCaategory = await _unitOfWork.Category.FindById(dto.CategoryId);
-            if (isVaildCaategory ==null)
+            if (isVaildCaategory == null)
                 return BadRequest("Wrong Category Id");
             var isVaildBrand = await _unitOfWork.Brand.FindById(dto.BrandId);
             if (isVaildBrand == null)
@@ -120,7 +120,7 @@ namespace E_Commerce.Controllers
             }
 
             var isVaildCaategory = await _unitOfWork.Category.FindById(dto.CategoryId);
-            if (isVaildCaategory==null)
+            if (isVaildCaategory == null)
                 return BadRequest("Wrong Category Id");
             var brand = await _unitOfWork.Brand.FindById(dto.BrandId);
             if (brand == null)

@@ -14,7 +14,7 @@ namespace E_Commerce.EF
         private readonly ApplicationDbContext _context;
 
 
-        public IBaseRepository<Brand> Brand { get;private set; }
+        public IBaseRepository<Brand> Brand { get; private set; }
 
         public IBaseRepository<Category> Category { get; private set; }
 

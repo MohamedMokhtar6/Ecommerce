@@ -55,7 +55,7 @@ namespace E_Commerce.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var brand = await _UnitOfWork.Brand.FindByQuery(b =>b.Id == id , new[] { "Category" });
+            var brand = await _UnitOfWork.Brand.FindByQuery(b => b.Id == id, new[] { "Category" });
             if (brand == null)
                 return NotFound("brand not found");
             return Ok(brand);
@@ -79,7 +79,7 @@ namespace E_Commerce.Controllers
                 return BadRequest("poster is required");
             }
             var isVaildCaategory = await _UnitOfWork.Category.FindById(dto.CategoryId);
-            if (isVaildCaategory== null)
+            if (isVaildCaategory == null)
                 return BadRequest("Category not found");
             using var dataStream = new MemoryStream();
             await dto.Poster.CopyToAsync(dataStream);

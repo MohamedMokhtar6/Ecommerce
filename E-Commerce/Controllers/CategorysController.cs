@@ -19,7 +19,8 @@ namespace E_Commerce.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCategory(CategoryDto dto)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             var category = new Category
@@ -34,7 +35,7 @@ namespace E_Commerce.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletCategory(int id)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -52,7 +53,7 @@ namespace E_Commerce.Controllers
                 return BadRequest(ModelState);
             }
             var item = await _unitOfWork.Category.FindById(id);
-            if(item == null)
+            if (item == null)
                 return NotFound();
             return Ok(item);
         }
@@ -69,10 +70,11 @@ namespace E_Commerce.Controllers
                 return BadRequest();
             }
             var item = await _unitOfWork.Category.FindById(id);
-            if (item == null) {
+            if (item == null)
+            {
                 return NotFound();
             }
-            item.Name= category.Name;
+            item.Name = category.Name;
             item.UpdateDate = DateTime.Now;
             _unitOfWork.Category.Update(item);
             return Ok(item);
