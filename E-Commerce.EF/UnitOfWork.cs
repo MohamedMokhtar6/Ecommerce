@@ -14,17 +14,17 @@ namespace E_Commerce.EF
         private readonly ApplicationDbContext _context;
 
 
-        public IBaseRepository<Brand> BrandRepo { get;private set; }
+        public IBaseRepository<Brand> Brand { get;private set; }
 
-        public IBaseRepository<Category> CategoryRepo { get; private set; }
+        public IBaseRepository<Category> Category { get; private set; }
 
-        public IBaseRepository<Product> ProductRepo { get; private set; }
+        public IBaseRepository<Product> Product { get; private set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            BrandRepo = new BaseRepository<Brand>(_context);
-            CategoryRepo = new BaseRepository<Category>(_context);
-            ProductRepo = new BaseRepository<Product>(_context);
+            Brand = new BaseRepository<Brand>(_context);
+            Category = new BaseRepository<Category>(_context);
+            Product = new BaseRepository<Product>(_context);
         }
         public int Complete()
         {
