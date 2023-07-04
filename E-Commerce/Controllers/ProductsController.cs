@@ -23,12 +23,14 @@ namespace E_Commerce.Controllers
 
         }
         [HttpGet]
+
         public async Task<IActionResult> GetAllAsync( int? pageresult, int? pageNumber)
         {
             var prodNumber = await _unitOfWork.Product.count();
             int? pageCount = pageresult.HasValue ? Convert.ToInt32(Math.Ceiling((decimal)prodNumber / (decimal)pageresult)) : null;
             var product = await _unitOfWork.Product.GetAllByQuery((pageNumber - 1) * (int?)pageresult
                , (int?)pageresult, new[] { "Brand", "Category" }, p => p.Id);
+
             return Ok(product);
         }
         [HttpGet("id")]

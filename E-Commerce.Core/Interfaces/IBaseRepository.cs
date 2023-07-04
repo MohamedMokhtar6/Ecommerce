@@ -24,6 +24,7 @@ namespace E_Commerce.Core.Interfaces
             Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending");
         Task<T> FindByQuery(Expression<Func<T, bool>> match, String[] includes = null);
         Task<IEnumerable<T>> GetAllByQuery(int? skip, int? take, String[] includes = null, Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending");
+
         Task<IEnumerable<T>> GetAllByQuery(String[] includes = null);
         Task<int> count();
     }

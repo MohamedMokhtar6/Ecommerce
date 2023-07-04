@@ -84,6 +84,7 @@ namespace E_Commerce.EF.Repositories
             IQueryable<T> query = _context.Set<T>();
             if (includes != null)
                 foreach (var include in includes)
+youssef2
                 {
                     query = query.Include(include);
                 }
@@ -109,6 +110,7 @@ namespace E_Commerce.EF.Repositories
         }
 
         public async Task<IEnumerable<T>> GetAllByQuery(int? skip, int? take, string[] includes = null, Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending")
+
         {
             IQueryable<T> query = _context.Set<T>();
             if (skip.HasValue)
@@ -147,6 +149,7 @@ namespace E_Commerce.EF.Repositories
         public async Task<int> count()
         {
             return await _context.Set<T>().CountAsync();
+
         }
     }
 }
