@@ -81,7 +81,7 @@ namespace E_Commerce.EF.Repositories
         public async Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match, string[] includes = null, Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending")
         {
             IQueryable<T> query = _context.Set<T>();
-            if(includes != null)
+            if (includes != null)
                 foreach(var include in includes)
                 {
                     query = query.Include(include);
@@ -107,9 +107,14 @@ namespace E_Commerce.EF.Repositories
             return await query.FirstOrDefaultAsync(match);
         }
 
-        public async Task<IEnumerable<T>> GetAllByQuery(string[] includes = null, Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending")
+        public async Task<IEnumerable<T>> GetAllByQuery(int? skip, int? take ,string[] includes = null, Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending")
         {
             IQueryable<T> query = _context.Set<T>();
+            if (skip.HasValue)
+                query = query.Skip(skip.Value);
+
+            if (take.HasValue)
+                query = query.Take(take.Value);
             if (includes != null)
                 foreach (var include in includes)
                 {
@@ -137,9 +142,10 @@ namespace E_Commerce.EF.Repositories
             return await query.ToListAsync();
         }
 
-        public Task<IEnumerable<T>> Search(string name)
+
+        public async Task<int> count()
         {
-            throw new NotImplementedException();
+           return await _context.Set<T>().CountAsync();
         }
     }
 }

@@ -20,9 +20,12 @@ namespace E_Commerce.Controllers
             _unitOfWork = unitOfWork;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync(int? pageresult ,int? pageNumber)
         {
-            var product = await _unitOfWork.Product.GetAllByQuery(new[] { "Brand", "Category" }, p => p.UpdateDate);
+            var prodNumber = await _unitOfWork.Product.count();
+            var pageCount = Math.Ceiling((decimal)prodNumber / (decimal)pageresult);
+            var product = await _unitOfWork.Product.GetAllByQuery((pageNumber-1)*(int)pageresult
+                ,(int)pageresult,new[] { "Brand", "Category" }, p => p.Id);
             return Ok(product);
         }
         [HttpGet("id")]
