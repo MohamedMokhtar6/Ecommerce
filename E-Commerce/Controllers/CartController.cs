@@ -36,9 +36,8 @@ namespace E_Commerce.Controllers
             var cart=new Cart { UserId = dto.UserId };
             await _cartRepository.Add(cart);
             return Ok(cart);
-        }        
-       
-       
+        }
+
 
     }
 }

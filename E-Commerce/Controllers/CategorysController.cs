@@ -11,10 +11,10 @@ namespace E_Commerce.Controllers
     [ApiController]
     public class CategorysController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public CategorysController(IUnitOfWork unitOfWork)
+        private readonly IBaseRepository<Category> _categoryRepository;
+        public CategorysController(IBaseRepository<Category> categoryRepository)
         {
-            _unitOfWork = unitOfWork;
+            _categoryRepository = categoryRepository;
         }
         [HttpPost]
         public async Task<IActionResult> AddCategory(CategoryDto dto)
@@ -27,7 +27,7 @@ namespace E_Commerce.Controllers
                 Name = dto.Name,
                 UpdateDate = DateTime.Now
             };
-            await _unitOfWork.Category.Add(category);
+            await _categoryRepository.Add(category);
             return Ok(category);
 
         }
@@ -38,10 +38,10 @@ namespace E_Commerce.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var item = await _unitOfWork.Category.FindById(id);
+            var item = await _categoryRepository.FindById(id);
             if (item == null)
                 return NotFound();
-            await _unitOfWork.Category.Delet(item);
+            await _categoryRepository.Delet(item);
             return Ok(item);
         }
         [HttpGet("{id}")]
@@ -51,7 +51,7 @@ namespace E_Commerce.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var item = await _unitOfWork.Category.FindById(id);
+            var item = await _categoryRepository.FindById(id);
             if(item == null)
                 return NotFound();
             return Ok(item);
@@ -59,7 +59,7 @@ namespace E_Commerce.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _unitOfWork.Category.GetAll());
+            return Ok(await _categoryRepository.GetAll());
         }
         [HttpPut]
         public async Task<IActionResult> Update(int id, [FromBody] CategoryDto category)
@@ -68,13 +68,13 @@ namespace E_Commerce.Controllers
             {
                 return BadRequest();
             }
-            var item = await _unitOfWork.Category.FindById(id);
+            var item = await _categoryRepository.FindById(id);
             if (item == null) {
                 return NotFound();
             }
             item.Name= category.Name;
             item.UpdateDate = DateTime.Now;
-            _unitOfWork.Category.Update(item);
+            _categoryRepository.Update(item);
             return Ok(item);
 
         }

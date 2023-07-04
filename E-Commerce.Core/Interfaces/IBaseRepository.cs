@@ -11,11 +11,13 @@ namespace E_Commerce.Core.Interfaces
     {
         Task<T> Add(T entry);
         Task Delet(T item);
+        Task DeleteAll(IEnumerable<T> items);
         Task<T> FindById(int id);
         Task<T> FindById(string id);
         Task<T> FindById(Guid id);
         Task<IEnumerable<T>> GetAll();
         void Update(T item);
+        Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match );
         Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match ,String[] includes = null);
         Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match, String[] includes = null ,
             Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending");

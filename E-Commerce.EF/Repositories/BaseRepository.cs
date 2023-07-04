@@ -31,6 +31,11 @@ namespace E_Commerce.EF.Repositories
             _context.Set<T>().Remove(item);
             _context.SaveChanges();
  
+        }    public async Task DeleteAll(IEnumerable<T> items)
+        {
+            _context.Set<T>().RemoveRange(items);
+            _context.SaveChanges();
+ 
         }
 
         public async Task<T> FindById(int id)
@@ -63,6 +68,11 @@ namespace E_Commerce.EF.Repositories
                 {
                     query = query.Include(include);
                 }
+            return await query.Where(match).ToListAsync();
+        }  public async Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match)
+        {
+            IQueryable<T> query = _context.Set<T>();
+          
             return await query.Where(match).ToListAsync();
         }
 
