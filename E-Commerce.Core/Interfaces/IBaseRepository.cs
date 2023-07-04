@@ -18,12 +18,13 @@ namespace E_Commerce.Core.Interfaces
         Task<IEnumerable<T>> GetAll();
 
         void Update(T item);
-        Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match );
-        Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match ,String[] includes = null);
-        Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match, String[] includes = null ,
-            Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending" );
-        Task<T> FindByQuery(Expression<Func<T,bool>> match, String[] includes = null);
-        Task<IEnumerable<T>> GetAllByQuery(int? skip, int? take, String[] includes = null , Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending");
+        Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match);
+        Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match, String[] includes = null);
+        Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match, String[] includes = null,
+            Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending");
+        Task<T> FindByQuery(Expression<Func<T, bool>> match, String[] includes = null);
+        Task<IEnumerable<T>> GetAllByQuery(int? skip, int? take, String[] includes = null, Expression<Func<T, object>> orderBy = null, string orderByDirection = "Ascending");
+
         Task<IEnumerable<T>> GetAllByQuery(String[] includes = null);
         Task<int> count();
     }

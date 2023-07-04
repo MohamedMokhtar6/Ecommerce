@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Core.Dtos;
 using E_Commerce.Core.Interfaces;
 using E_Commerce.Core.Models;
+using E_Commerce.EF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +19,18 @@ namespace E_Commerce.Controllers
         public ProductsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+           
+
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync(int? pageresult ,int? pageNumber)
+
+        public async Task<IActionResult> GetAllAsync( int? pageresult, int? pageNumber)
         {
             var prodNumber = await _unitOfWork.Product.count();
-            var pageCount = Math.Ceiling((decimal)prodNumber / (decimal)pageresult);
-            var product = await _unitOfWork.Product.GetAllByQuery((pageNumber-1)*(int)pageresult
-                ,(int)pageresult,new[] { "Brand", "Category" }, p => p.Id);
+            int? pageCount = pageresult.HasValue ? Convert.ToInt32(Math.Ceiling((decimal)prodNumber / (decimal)pageresult)) : null;
+            var product = await _unitOfWork.Product.GetAllByQuery((pageNumber - 1) * (int?)pageresult
+               , (int?)pageresult, new[] { "Brand", "Category" }, p => p.Id);
+
             return Ok(product);
         }
         [HttpGet("id")]
@@ -143,9 +148,9 @@ namespace E_Commerce.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> search(string productName)
         {
-            if(productName == null) return BadRequest("no search query");
-            var products = await _unitOfWork.Product.FindAllByQuery(p=>p.Name.Contains(productName) || p.Description.Contains(productName)
-            , new[] { "Category", "Brand" } , p=>p.Name);
+            if (productName == null) return BadRequest("no search query");
+            var products = await _unitOfWork.Product.FindAllByQuery(p => p.Name.Contains(productName) || p.Description.Contains(productName)
+            , new[] { "Category", "Brand" }, p => p.Name);
             if (products.Count() == 0) return NotFound();
             return Ok(products);
         }
