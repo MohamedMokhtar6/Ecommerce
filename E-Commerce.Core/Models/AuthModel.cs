@@ -13,7 +13,6 @@ namespace E_Commerce.Core.Models
         public DateTime ExpriesOn { get; set; }
         [JsonIgnore]
         public string? RefreshToken { get; set; }
-
         public DateTime RefreshTokenExpiration { get; set; }
     }
 }
