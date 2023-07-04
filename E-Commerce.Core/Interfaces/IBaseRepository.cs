@@ -16,6 +16,8 @@ namespace E_Commerce.Core.Interfaces
         Task<T> FindById(string id);
         Task<T> FindById(Guid id);
         Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> Search(string name);
+
         void Update(T item);
         Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match );
         Task<IEnumerable<T>> FindAllByQuery(Expression<Func<T, bool>> match ,String[] includes = null);
