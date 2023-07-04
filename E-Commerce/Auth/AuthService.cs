@@ -84,6 +84,7 @@ namespace E_Commerce.Auth
             authModel.UserName = user.UserName;
             authModel.ExpriesOn = jwtSecurityToken.ValidTo;
             authModel.Roles = rolesList.ToList();
+            authModel.UserId=user.Id;
             if (user.RefreshTokens.Any(t => t.IsActive))
             {
                 var activeRefreshToken = user.RefreshTokens.FirstOrDefault(t => t.IsActive);

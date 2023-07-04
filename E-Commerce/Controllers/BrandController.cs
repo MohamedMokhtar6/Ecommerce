@@ -11,12 +11,10 @@ namespace E_Commerce.Controllers
     [ApiController]
     public class BrandController : ControllerBase
     {
-        private readonly IBaseRepository<Brand> _brandRepository;
-        private readonly IBaseRepository<Category> _categoryRepository;
-        public BrandController(IBaseRepository<Brand> brandRepository, IBaseRepository<Category> categoryRepository)
+        private readonly IUnitOfWork _UnitOfWork;
+        public BrandController(IUnitOfWork UnitOfWork)
         {
-            _brandRepository = brandRepository;
-            _categoryRepository = categoryRepository;
+            _UnitOfWork = UnitOfWork;
         }
 
         [HttpPost]
@@ -28,7 +26,7 @@ namespace E_Commerce.Controllers
             }
             if (dto.Poster == null)
                 return BadRequest("poster is required");
-            var category = await _categoryRepository.FindById(dto.CategoryId);
+            var category = await _UnitOfWork.Category.FindById(dto.CategoryId);
             if (category == null)
                 return BadRequest("category not found");
             using var dataStream = new MemoryStream();
@@ -40,7 +38,7 @@ namespace E_Commerce.Controllers
                 Poster = dataStream.ToArray(),
                 UpdateDate = DateTime.Now
             };
-            await _brandRepository.Add(brand);
+            await _UnitOfWork.Brand.Add(brand);
             return Ok(brand);
         }
         [HttpDelete]
@@ -48,16 +46,16 @@ namespace E_Commerce.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var brand = await _brandRepository.FindById(id);
+            var brand = await _UnitOfWork.Brand.FindById(id);
             if (brand == null)
                 return NotFound("brand not found");
-            await _brandRepository.Delet(brand);
+            await _UnitOfWork.Brand.Delet(brand);
             return Ok(brand);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var brand = await _brandRepository.FindByQuery(b =>b.Id == id , new[] { "Category" });
+            var brand = await _UnitOfWork.Brand.FindByQuery(b => b.Id == id, new[] { "Category" });
             if (brand == null)
                 return NotFound("brand not found");
             return Ok(brand);
@@ -66,12 +64,12 @@ namespace E_Commerce.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _brandRepository.GetAllByQuery(new[] { "Category" }));
+            return Ok(await _UnitOfWork.Brand.GetAllByQuery(new[] { "Category" }));
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(int id, [FromForm] BrandDto dto)
         {
-            var brand = await _brandRepository.FindById(id);
+            var brand = await _UnitOfWork.Brand.FindById(id);
             if (brand == null)
             {
                 return NotFound($"no brand was found with id ={id}");
@@ -80,8 +78,8 @@ namespace E_Commerce.Controllers
             {
                 return BadRequest("poster is required");
             }
-            var isVaildCaategory = await _categoryRepository.FindById(dto.CategoryId);
-            if (isVaildCaategory== null)
+            var isVaildCaategory = await _UnitOfWork.Category.FindById(dto.CategoryId);
+            if (isVaildCaategory == null)
                 return BadRequest("Category not found");
             using var dataStream = new MemoryStream();
             await dto.Poster.CopyToAsync(dataStream);
@@ -90,7 +88,7 @@ namespace E_Commerce.Controllers
             brand.Poster = dataStream.ToArray();
             brand.UpdateDate = DateTime.Now;
 
-            _brandRepository.Update(brand);
+            _UnitOfWork.Brand.Update(brand);
             return Ok(brand);
         }
 

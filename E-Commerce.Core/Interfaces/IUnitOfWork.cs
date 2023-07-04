@@ -9,9 +9,9 @@ namespace E_Commerce.Core.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IBaseRepository<Brand> BrandRepo { get; }
-        IBaseRepository<Category> CategoryRepo { get; }
-        IBaseRepository<Product> ProductRepo { get; }
+        IBaseRepository<Brand> Brand { get; }
+        IBaseRepository<Category> Category { get; }
+        IBaseRepository<Product> Product { get; }
 
         int Complete();
     }
