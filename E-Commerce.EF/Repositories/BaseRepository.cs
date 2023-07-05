@@ -84,7 +84,7 @@ namespace E_Commerce.EF.Repositories
             IQueryable<T> query = _context.Set<T>();
             if (includes != null)
                 foreach (var include in includes)
-youssef2
+
                 {
                     query = query.Include(include);
                 }
