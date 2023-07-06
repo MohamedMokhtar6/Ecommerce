@@ -88,7 +88,7 @@ namespace E_Commerce.Controllers
                 Name = dto.Name,
                 CategoryId = dto.CategoryId,
                 Poster = dataStream.ToArray(),
-                UpdateDate = DateTime.Now,
+                UpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"),
                 BrandId = dto.BrandId,
             };
             await _unitOfWork.Product.Add(product);
@@ -139,7 +139,7 @@ namespace E_Commerce.Controllers
             product.Rate = dto.Rate;
             product.Quntity = dto.Quntity;
             product.CategoryId = dto.CategoryId;
-            product.UpdateDate = DateTime.Now;
+            product.UpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
             product.BrandId = dto.BrandId;
 
             _unitOfWork.Product.Update(product);

@@ -9,8 +9,8 @@ namespace E_Commerce.Core.Models
         public double Price { get; set; }
         public double Rate { get; set; }
         public int Quntity { get; set; }
-        public DateTime CreateDate { get; set; } = DateTime.Now;
-        public DateTime UpdateDate { get; set; } 
+        public string CreateDate { get; set; } = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
+        public string UpdateDate { get; set; } 
         [MaxLength(2500)]
         public string Description { get; set; }
         public byte[] Poster { get; set; }
