@@ -26,7 +26,7 @@ namespace E_Commerce.Controllers
             var category = new Category
             {
                 Name = dto.Name,
-                UpdateDate = DateTime.Now
+                UpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt")
             };
             await _unitOfWork.Category.Add(category);
             return Ok(category);
@@ -57,7 +57,7 @@ namespace E_Commerce.Controllers
                 return NotFound();
             return Ok(item);
         }
-        [HttpGet("GetAll")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _unitOfWork.Category.GetAll());
@@ -75,7 +75,7 @@ namespace E_Commerce.Controllers
                 return NotFound();
             }
             item.Name = category.Name;
-            item.UpdateDate = DateTime.Now;
+            item.UpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
             _unitOfWork.Category.Update(item);
             return Ok(item);
 

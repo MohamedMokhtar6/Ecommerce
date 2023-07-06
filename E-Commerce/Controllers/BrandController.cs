@@ -36,7 +36,7 @@ namespace E_Commerce.Controllers
                 Name = dto.Name,
                 CategoryId = dto.CategoryId,
                 Poster = dataStream.ToArray(),
-                UpdateDate = DateTime.Now
+                UpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt")
             };
             await _UnitOfWork.Brand.Add(brand);
             return Ok(brand);
@@ -86,7 +86,7 @@ namespace E_Commerce.Controllers
             brand.Name = dto.Name;
             brand.CategoryId = dto.CategoryId;
             brand.Poster = dataStream.ToArray();
-            brand.UpdateDate = DateTime.Now;
+            brand.UpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
 
             _UnitOfWork.Brand.Update(brand);
             return Ok(brand);
