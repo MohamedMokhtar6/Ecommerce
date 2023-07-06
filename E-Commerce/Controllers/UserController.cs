@@ -23,12 +23,13 @@ namespace E_Commerce.Controllers
             public string LastName { get; set; }
             public string userName { get; set; }
             public string Email { get; set; }
+            public string PhoneNumber { get; set; }
         }
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var users = await _userRepository.GetAll();
-            var result = users.Select(u => new UserNameResponse {Id=u.Id, FirstName = u.FirstName, LastName = u.LastName, userName=u.UserName, Email=u.Email }).ToList();
+            var result = users.Select(u => new UserNameResponse {Id=u.Id, FirstName = u.FirstName, LastName = u.LastName, userName=u.UserName, Email=u.Email ,PhoneNumber=u.PhoneNumber }).ToList();
             return Ok(result);
         }
         [HttpGet("{id}")]
