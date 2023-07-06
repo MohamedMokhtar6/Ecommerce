@@ -18,5 +18,6 @@ namespace E_Commerce.Core.Models
 
         [StringLength(256)]
         public string Password { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
