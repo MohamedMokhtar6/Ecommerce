@@ -36,8 +36,8 @@ namespace E_Commerce.Controllers
         [HttpGet("id")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var product = await _unitOfWork.Product.FindAllByQuery(p => p.Id == id, new[] { "Category", "Brand" });
-            if (product.Count() == 0)
+            var product = await _unitOfWork.Product.FindByQuery(p => p.Id == id, new[] { "Category", "Brand" });
+            if (product==null)
                 return NotFound();
             return Ok(product);
         }
@@ -95,7 +95,7 @@ namespace E_Commerce.Controllers
             return Ok(product);
 
         }
-        [HttpDelete("id")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _unitOfWork.Product.FindById(id);

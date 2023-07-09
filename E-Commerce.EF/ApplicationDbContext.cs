@@ -13,6 +13,7 @@ namespace E_Commerce.EF
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+           
         }
 
         public DbSet<Category> categories { get; set; }
