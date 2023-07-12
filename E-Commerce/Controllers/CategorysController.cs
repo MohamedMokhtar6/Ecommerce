@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Core.Dtos;
 using E_Commerce.Core.Interfaces;
 using E_Commerce.Core.Models;
+using E_Commerce.EF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,7 @@ namespace E_Commerce.Controllers
             return Ok(category);
 
         }
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeletCategory(int id)
         {
             if (!ModelState.IsValid)
@@ -45,7 +46,7 @@ namespace E_Commerce.Controllers
             await _unitOfWork.Category.Delet(item);
             return Ok(item);
         }
-        [HttpGet("{id}")]
+        [HttpGet("id")]
         public async Task<IActionResult> GetById(int id)
         {
             if (!ModelState.IsValid)
@@ -62,6 +63,7 @@ namespace E_Commerce.Controllers
         {
             return Ok(await _unitOfWork.Category.GetAll());
         }
+       
         [HttpPut]
         public async Task<IActionResult> Update(int id, [FromBody] CategoryDto category)
         {

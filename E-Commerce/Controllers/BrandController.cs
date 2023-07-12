@@ -52,7 +52,7 @@ namespace E_Commerce.Controllers
             await _UnitOfWork.Brand.Delet(brand);
             return Ok(brand);
         }
-        [HttpGet("{id}")]
+        [HttpGet("id")]
         public async Task<IActionResult> GetById(int id)
         {
             var brand = await _UnitOfWork.Brand.FindByQuery(b => b.Id == id, new[] { "Category" });
@@ -66,7 +66,7 @@ namespace E_Commerce.Controllers
         {
             return Ok(await _UnitOfWork.Brand.GetAllByQuery(new[] { "Category" }));
         }
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> UpdateAsync(int id, [FromForm] BrandDto dto)
         {
             var brand = await _UnitOfWork.Brand.FindById(id);

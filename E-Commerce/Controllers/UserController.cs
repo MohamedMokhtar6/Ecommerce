@@ -29,7 +29,7 @@ namespace E_Commerce.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var users = await _userRepository.GetAll();
-            var result = users.Select(u => new UserNameResponse {Id=u.Id, FirstName = u.FirstName, LastName = u.LastName, userName=u.UserName, Email=u.Email ,PhoneNumber=u.PhoneNumber }).ToList();
+            var result = users.Select(u => new UserNameResponse {Id=u.Id, FirstName = u.FirstName, LastName = u.LastName, userName=u.UserName, Email=u.Email ,PhoneNumber=u.PhoneNumber }).OrderBy(u=>u.FirstName).ToList();
             return Ok(result);
         }
         [HttpGet("{id}")]
