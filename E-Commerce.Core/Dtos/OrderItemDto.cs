@@ -9,11 +9,9 @@ namespace E_Commerce.Core.Dtos
 {
     public class OrderItemDto
     {
-      
         public int ProductId { get; set; }
-        public decimal UnitPrice { get; set; }
+        public double UnitPrice { get; set; }
         public int Quantity { get; set; }
-        public decimal Total { get; set; }
-
+        public double? Total { get; set; }
     }
 }

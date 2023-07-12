@@ -11,17 +11,15 @@ namespace E_Commerce.Controllers
     [ApiController]
     public class CartItemsController : ControllerBase
     {
-        private readonly IBaseRepository<CartItem> _cartItemRepository;
-        private readonly IBaseRepository<Product> _productRepository;
-        public CartItemsController(IBaseRepository<Product> productRepository, IBaseRepository<CartItem> cartItemRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CartItemsController(IUnitOfWork unitOfWork)
         {
-            _productRepository = productRepository;
-            _cartItemRepository = cartItemRepository;
+            _unitOfWork = unitOfWork;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllItemsAsync()
         {
-            var items = await _cartItemRepository.GetAll();
+            var items = await _unitOfWork.CartItem.GetAll();
 
             return Ok(items);
         }
@@ -33,7 +31,7 @@ namespace E_Commerce.Controllers
                 return BadRequest(ModelState);
             }
 
-            var product = await _productRepository.FindById(itemDto.ProductId);
+            var product = await _unitOfWork.Product.FindById(itemDto.ProductId);
             var cartItem = new CartItem
             {
                 ProductId = itemDto.ProductId,
@@ -42,7 +40,7 @@ namespace E_Commerce.Controllers
                 CartId = itemDto.CartId
 
             };
-            await _cartItemRepository.Add(cartItem);
+            await _unitOfWork.CartItem.Add(cartItem);
             return Ok(cartItem);
         }
         [HttpPut]
@@ -52,27 +50,27 @@ namespace E_Commerce.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var item = await _cartItemRepository.FindById(cartId);
+            var item = await _unitOfWork.CartItem.FindById(cartId);
             item.Quantity = quantity;
-             _cartItemRepository.Update(item);
+            _unitOfWork.CartItem.Update(item);
             return Ok(item);
         }
 
         [HttpDelete("EmptyCart")]
         public async Task<IActionResult> EmptyCartAsync(Guid cartId)
         {
-            var cartItems = await _cartItemRepository.FindAllByQuery(c => c.CartId == cartId);
+            var cartItems = await _unitOfWork.CartItem.FindAllByQuery(c => c.CartId == cartId);
 
-            await _cartItemRepository.DeleteAll(cartItems);
+            await _unitOfWork.CartItem.DeleteAll(cartItems);
 
             return Ok("Cart Is Empty Now!!");
         }  
         [HttpDelete]
         public async Task<IActionResult> DeleteCartAsync(int cartId)
         {
-            var cartItem = await _cartItemRepository.FindById(cartId);
+            var cartItem = await _unitOfWork.CartItem.FindById(cartId);
 
-            await _cartItemRepository.Delet(cartItem);
+            await _unitOfWork.CartItem.Delet(cartItem);
             
             return Ok("Item Deleted!");
         }

@@ -10,6 +10,7 @@ namespace E_Commerce.Core.Interfaces
     public interface IBaseRepository<T> where T : class
     {
         Task<T> Add(T entry);
+        Task<IEnumerable<T>> AddRange(List<T> entry);
         Task Delet(T item);
         Task DeleteAll(IEnumerable<T> items);
         Task<T> FindById(int id);

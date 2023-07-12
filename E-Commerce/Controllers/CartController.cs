@@ -10,22 +10,31 @@ namespace E_Commerce.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private readonly IBaseRepository<Cart> _cartRepository;
-   
-        public CartController(IBaseRepository<Cart> cartRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CartController(IUnitOfWork unitOfWork)
         {
-            _cartRepository = cartRepository;
+            _unitOfWork = unitOfWork;
      
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var carts=await _cartRepository.GetAllByQuery(new[] { "Items" });
-     
+            var carts=await _unitOfWork.Cart.GetAllByQuery(new[] { "Items" });     
             return Ok(carts);
-        } 
-       
+        }
+        [HttpGet("id")]
+        public async Task<IActionResult> GetbByUser(string userId)
+        {
+            var user = await _unitOfWork.Users.FindById(userId);
+            if (user == null)
+            {
+                return NotFound("user not found");
+            }
+            var carts = await _unitOfWork.Cart.FindAllByQuery(c=>c.UserId==userId,new[] { "Items" });
+            return Ok(carts);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromForm] CartDto dto)
         {
@@ -34,7 +43,7 @@ namespace E_Commerce.Controllers
                 return BadRequest(ModelState);
             }
             var cart=new Cart { UserId = dto.UserId };
-            await _cartRepository.Add(cart);
+            await _unitOfWork.Cart.Add(cart);
             return Ok(cart);
         }
 
