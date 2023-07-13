@@ -25,7 +25,12 @@ namespace E_Commerce.EF.Repositories
             _context.SaveChanges();
             return entry;
         }
-
+        public async Task<IEnumerable<T>> AddRange(List<T> entry)
+        {
+            await _context.Set<T>().AddRangeAsync(entry);
+            _context.SaveChanges();
+            return entry;
+        }
         public async Task Delet(T item)
         {
             _context.Set<T>().Remove(item);
@@ -151,5 +156,7 @@ namespace E_Commerce.EF.Repositories
             return await _context.Set<T>().CountAsync();
 
         }
+
+
     }
 }

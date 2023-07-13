@@ -4,6 +4,7 @@ using E_Commerce.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230712192414_orderupdate")]
+    partial class orderupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,7 +131,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("brands", (string)null);
+                    b.ToTable("brands");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.Cart", b =>
@@ -150,7 +153,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("carts", (string)null);
+                    b.ToTable("carts");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.CartItem", b =>
@@ -177,7 +180,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.ToTable("cartItems", (string)null);
+                    b.ToTable("cartItems");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.Category", b =>
@@ -202,7 +205,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("categories", (string)null);
+                    b.ToTable("categories");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.Order", b =>
@@ -232,7 +235,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("orders", (string)null);
+                    b.ToTable("orders");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.OrderItem", b =>
@@ -243,7 +246,11 @@ namespace E_Commerce.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("OrderId")
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("OrderId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ProductId")
@@ -260,9 +267,9 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderId1");
 
-                    b.ToTable("orderItem", (string)null);
+                    b.ToTable("orderItem");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.Product", b =>
@@ -315,7 +322,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("products", (string)null);
+                    b.ToTable("products");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -453,7 +460,7 @@ namespace E_Commerce.EF.Migrations
 
             modelBuilder.Entity("E_Commerce.Core.Models.ApplicationUser", b =>
                 {
-                    b.OwnsMany("E_Commerce.Core.Models.ApplicationUser.RefreshTokens#E_Commerce.Core.Models.RefreshToken", "RefreshTokens", b1 =>
+                    b.OwnsMany("E_Commerce.Core.Models.RefreshToken", "RefreshTokens", b1 =>
                         {
                             b1.Property<string>("ApplicationUserId")
                                 .HasColumnType("nvarchar(450)");
@@ -479,7 +486,7 @@ namespace E_Commerce.EF.Migrations
 
                             b1.HasKey("ApplicationUserId", "Id");
 
-                            b1.ToTable("RefreshToken", (string)null);
+                            b1.ToTable("RefreshToken");
 
                             b1.WithOwner()
                                 .HasForeignKey("ApplicationUserId");
@@ -514,7 +521,7 @@ namespace E_Commerce.EF.Migrations
                 {
                     b.HasOne("E_Commerce.Core.Models.Order", "Order")
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("OrderId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -12,6 +12,11 @@ namespace E_Commerce.Core.Interfaces
         IBaseRepository<Brand> Brand { get; }
         IBaseRepository<Category> Category { get; }
         IBaseRepository<Product> Product { get; }
+        IBaseRepository<Cart> Cart { get; }
+        IBaseRepository<ApplicationUser> Users { get; }
+        IBaseRepository<CartItem> CartItem { get; }
+        IBaseRepository<Order> Order { get; }
+        IBaseRepository<OrderItem> OrderItem { get; }
 
         int Complete();
     }
