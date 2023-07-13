@@ -128,7 +128,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("brands");
+                    b.ToTable("brands", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.Cart", b =>
@@ -150,7 +150,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("carts");
+                    b.ToTable("carts", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.CartItem", b =>
@@ -177,7 +177,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.ToTable("cartItems");
+                    b.ToTable("cartItems", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.Category", b =>
@@ -202,7 +202,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("categories");
+                    b.ToTable("categories", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.Order", b =>
@@ -232,7 +232,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("orders");
+                    b.ToTable("orders", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.OrderItem", b =>
@@ -262,7 +262,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("orderItem");
+                    b.ToTable("orderItem", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Models.Product", b =>
@@ -315,7 +315,7 @@ namespace E_Commerce.EF.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("products");
+                    b.ToTable("products", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -453,7 +453,7 @@ namespace E_Commerce.EF.Migrations
 
             modelBuilder.Entity("E_Commerce.Core.Models.ApplicationUser", b =>
                 {
-                    b.OwnsMany("E_Commerce.Core.Models.RefreshToken", "RefreshTokens", b1 =>
+                    b.OwnsMany("E_Commerce.Core.Models.ApplicationUser.RefreshTokens#E_Commerce.Core.Models.RefreshToken", "RefreshTokens", b1 =>
                         {
                             b1.Property<string>("ApplicationUserId")
                                 .HasColumnType("nvarchar(450)");
@@ -479,7 +479,7 @@ namespace E_Commerce.EF.Migrations
 
                             b1.HasKey("ApplicationUserId", "Id");
 
-                            b1.ToTable("RefreshToken");
+                            b1.ToTable("RefreshToken", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ApplicationUserId");

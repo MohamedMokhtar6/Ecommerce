@@ -71,14 +71,14 @@ namespace E_Commerce.Controllers
         [HttpGet("id")]
         public async Task<IActionResult> GetOrderbyId(Guid orderId)
         {
-            var order = await _unitOfWork.Order.FindById(orderId);
+            var order = await _unitOfWork.Order.FindAllByQuery(o => o.Id == orderId, new[] { "OrderItems" });
             if (order == null) return NotFound("order not found");
             return Ok(order);
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var order = await _unitOfWork.Order.GetAllByQuery(new[] { "OrderItem" });
+            var order = await _unitOfWork.Order.GetAllByQuery(new[] { "OrderItems" });
             if (order == null) return NotFound("order not found");
             return Ok(order);
         }
