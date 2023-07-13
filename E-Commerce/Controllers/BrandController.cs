@@ -60,6 +60,14 @@ namespace E_Commerce.Controllers
                 return NotFound("brand not found");
             return Ok(brand);
         }
+        [HttpGet("categoryId")]
+        public async Task<IActionResult> GetByCatId(int id)
+        {
+            var brand = await _UnitOfWork.Brand.FindAllByQuery(b => b.CategoryId == id, new[] { "Category" });
+            if (brand == null)
+                return NotFound("brand not found");
+            return Ok(brand);
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()

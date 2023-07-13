@@ -25,6 +25,7 @@ namespace E_Commerce.Controllers
             public string userName { get; set; }
             public string Email { get; set; }
             public string PhoneNumber { get; set; }
+
         }
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
