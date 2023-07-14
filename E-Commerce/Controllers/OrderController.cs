@@ -59,7 +59,7 @@ namespace E_Commerce.Controllers
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(Guid id,string status)
+        public async Task<IActionResult> UpdateAsync(Guid id,[FromBody]string status)
         {
             var order = await _unitOfWork.Order.FindById(id);
             if (order == null) return BadRequest("order not found");
