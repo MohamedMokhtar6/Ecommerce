@@ -12,6 +12,7 @@ namespace E_Commerce.Core.Dtos
         public string UserId { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
+        public string OrderStatus { get; set; }
         //public ICollection<OrderItem> OrderItems { get; set; } = new HashSet<OrderItem>();
         public string PhoneNumber { get; set; }
 

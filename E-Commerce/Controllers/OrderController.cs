@@ -32,6 +32,7 @@ namespace E_Commerce.Controllers
                 City = info.City,
                 UserId = info.UserId,
                 PhoneNumber = info.PhoneNumber,
+                OrderStatus=info.OrderStatus
             };
             var res = await _unitOfWork.Order.Add(order);
             if(res == null)
@@ -56,6 +57,15 @@ namespace E_Commerce.Controllers
                 return NotFound("cart not found");
             await _unitOfWork.Cart.Delet(cart);
             return Ok();
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync(Guid id,string status)
+        {
+            var order = await _unitOfWork.Order.FindById(id);
+            if (order == null) return BadRequest("order not found");
+            order.OrderStatus = status;
+            _unitOfWork.Order.Update(order);
+            return Ok(order);
         }
 
         [HttpDelete]

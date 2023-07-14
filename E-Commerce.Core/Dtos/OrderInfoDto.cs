@@ -13,6 +13,7 @@ namespace E_Commerce.Core.Dtos
         public string City { get; set; }
         public string PhoneNumber { get; set; }
         public string UserId { get; set; }
+        public string OrderStatus { get; set; }
 
     }
 }

@@ -12,6 +12,7 @@ namespace E_Commerce.Core.Models
         public string UserId { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
+        public string OrderStatus { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public string PhoneNumber { get; set; }
