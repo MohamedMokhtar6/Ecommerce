@@ -59,11 +59,11 @@ namespace E_Commerce.Controllers
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(Guid id,[FromBody]string status)
+        public async Task<IActionResult> UpdateAsync(Guid id,[FromBody] OrderDto dto)
         {
             var order = await _unitOfWork.Order.FindById(id);
             if (order == null) return BadRequest("order not found");
-            order.OrderStatus = status;
+            order.OrderStatus = dto.OrderStatus;
             _unitOfWork.Order.Update(order);
             return Ok(order);
         }
