@@ -14,6 +14,7 @@ namespace E_Commerce.Core.Models
         public int ProductId { get; set; }
         public double UnitPrice { get; set; }
         public int Quantity { get; set; }
+        public Product Product { get; set; }
         [JsonIgnore]
         public Cart Cart { get; set; }
 

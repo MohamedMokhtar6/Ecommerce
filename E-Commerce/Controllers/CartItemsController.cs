@@ -19,14 +19,14 @@ namespace E_Commerce.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllItemsAsync()
         {
-            var items = await _unitOfWork.CartItem.GetAll();
+            var items = await _unitOfWork.CartItem.GetAllByQuery( new[] { "Product" });
 
             return Ok(items);
         }
         [HttpGet("cartId")]
         public async Task<IActionResult> GetAllItemsAsync(Guid cartId)
         {
-            var items = await _unitOfWork.CartItem.FindAllByQuery(i=>i.CartId==cartId);
+            var items = await _unitOfWork.CartItem.FindAllByQuery(i=>i.CartId==cartId, new[] { "Product" });
 
             return Ok(items);
         }
@@ -45,6 +45,8 @@ namespace E_Commerce.Controllers
                 UnitPrice = product.Price,
                 Quantity = itemDto.Quantity,
                 CartId = itemDto.CartId
+                
+                
 
             };
             await _unitOfWork.CartItem.Add(cartItem);

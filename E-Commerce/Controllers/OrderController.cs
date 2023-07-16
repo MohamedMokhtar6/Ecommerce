@@ -55,7 +55,6 @@ namespace E_Commerce.Controllers
             var cart =await _unitOfWork.Cart.FindById(cartId);
             if (cart == null)
                 return NotFound("cart not found");
-            await _unitOfWork.Cart.Delet(cart);
             return Ok();
         }
         [HttpPut]

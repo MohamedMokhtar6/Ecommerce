@@ -36,7 +36,9 @@ namespace E_Commerce.Auth
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                PhoneNumber=model.PhoneNumber
+                PhoneNumber=model.PhoneNumber,
+               
+                
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -63,7 +65,8 @@ namespace E_Commerce.Auth
                 UserName = user.UserName,
                 Masseage = "User Added Successfully",
                 RefreshToken = refreshToken.Token,
-                RefreshTokenExpiration = refreshToken.ExpiresOn
+                RefreshTokenExpiration = refreshToken.ExpiresOn,
+                UserId = user.Id
 
             };
         }
