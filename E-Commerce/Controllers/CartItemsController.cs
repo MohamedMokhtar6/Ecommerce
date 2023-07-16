@@ -23,7 +23,14 @@ namespace E_Commerce.Controllers
 
             return Ok(items);
         }
-        [HttpPost("Item")]
+        [HttpGet("cartId")]
+        public async Task<IActionResult> GetAllItemsAsync(Guid cartId)
+        {
+            var items = await _unitOfWork.CartItem.FindAllByQuery(i=>i.CartId==cartId);
+
+            return Ok(items);
+        }
+        [HttpPost]
         public async Task<IActionResult> AddItemAsync([FromForm] CartItemDto itemDto)
         {
             if (!ModelState.IsValid)
@@ -51,6 +58,10 @@ namespace E_Commerce.Controllers
                 return BadRequest(ModelState);
             }
             var item = await _unitOfWork.CartItem.FindById(cartId);
+            if (item == null)
+            {
+                return NotFound("no Item Was Found");
+            }
             item.Quantity = quantity;
             _unitOfWork.CartItem.Update(item);
             return Ok(item);
@@ -66,9 +77,13 @@ namespace E_Commerce.Controllers
             return Ok("Cart Is Empty Now!!");
         }  
         [HttpDelete]
-        public async Task<IActionResult> DeleteCartAsync(int cartId)
+        public async Task<IActionResult> DeleteCartAsync(int id)
         {
-            var cartItem = await _unitOfWork.CartItem.FindById(cartId);
+            var cartItem = await _unitOfWork.CartItem.FindById(id);
+            if(cartItem == null)
+            {
+                return NotFound("Wrong cart Item Id");
+            }
 
             await _unitOfWork.CartItem.Delet(cartItem);
             

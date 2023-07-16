@@ -31,12 +31,12 @@ namespace E_Commerce.Controllers
             {
                 return NotFound("user not found");
             }
-            var carts = await _unitOfWork.Cart.FindAllByQuery(c=>c.UserId==userId,new[] { "Items" });
+            var carts = await _unitOfWork.Cart.FindByQuery(c=>c.UserId==userId,new[] { "Items" });
             return Ok(carts);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromForm] CartDto dto)
+        public async Task<IActionResult> AddAsync([FromBody] CartDto dto)
         {
             if (!ModelState.IsValid)
             {
